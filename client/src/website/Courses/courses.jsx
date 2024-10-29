@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Courses.css';
+import './courses.css';
 import { Link } from 'react-router-dom';
 import NavBar from '../Nav Bar/nav_bar';
 
