@@ -1,0 +1,45 @@
+.accordion-button {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.3s;
+}
+
+#course_module_top_details {
+    box-shadow: 0px 0px 10px black;
+    background: url('/course_2.gif') no-repeat right center;
+    background-size: contain;
+}
+
+#course_module_top_details p {
+    text-shadow: 0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white, 0px 0px 2px white;
+}
+
+.accordion-collapse {
+    transition: height 0.4s ease;
+}
+
+.accordion-header {
+    cursor: pointer;
+}
+
+#courseModule_ul li {
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 10px;
+    background-color: rgb(77, 77, 255);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+#courseModule_ul li div {
+    margin-right: 2px;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
