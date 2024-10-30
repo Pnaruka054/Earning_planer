@@ -1,20 +1,23 @@
-import React, { useEffect } from 'react';
-import Home from './website/Home/home';
+import React, { useEffect, useState } from 'react';
+import Home from './website/user/Home/home';
 import "./App.css"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import FreeCourses from './website/Courses/Free Courses/free_courses';
-import PaidCourses from './website/Courses/Paid Courses/paid_courses';
-import Footer from './website/Footer/footer';
-import CourseModule from './website/Course Module/courseModule';
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
+import FreeCourses from './website/user/Courses/Free Courses/free_courses';
+import PaidCourses from './website/user/Courses/Paid Courses/paid_courses';
+import Footer from './website/user/Footer/footer';
+import CourseModule from './website/user/Course Module/courseModule';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import YtPlaylist from './website/YT playlist/YT_playlist';
-import Page_Not_Found from './website/Error page/page_Not_Found';
-import SearchCourse from './website/Search Course/search_course';
+import YtPlaylist from './website/user/YT playlist/YT_playlist';
+import Page_Not_Found from './website/user/Error page/page_Not_Found';
+import SearchCourse from './website/user/Search Course/search_course';
+import AdminPage from './website/admin/AdminPage';
+import EditCourses from './website/admin/MainContentPages/Courses Section/Edit Courses/editCourses'
+import EditReviews from './website/admin/MainContentPages/Student Reviews/Edit Reviews/editReviews'
 
 const App = () => {
 
-  useEffect(() => { 
+  useEffect(() => {
     AOS.init({
       offset: 0,
       duration: 500,
@@ -25,24 +28,47 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path="/free-courses/info" element={<YtPlaylist />} />
-          <Route path='/course/info/:id' element={<CourseModule />} />
-          <Route path='/free-courses' element={<FreeCourses />} />
-          <Route path='/paid-courses' element={<PaidCourses />} />
-          <Route path='/search' element={<SearchCourse />} />
-          <Route path="/*" element={<Page_Not_Found />} /> 
-        </Routes>
+        <Allcontent />
+      </BrowserRouter>
+    </div>
+  );
+}
+
+function Allcontent() {
+  let location = useLocation()
+  let [ShowHF, setShowHF] = useState(true)
+  let index = location.pathname
+
+  useEffect(() => {
+    let indexToShowHF = location.pathname === '/admin' || location.pathname === `/admin/editFooter/${index}` ? false : location.pathname !== `/admin/edit/${index}`
+    setShowHF(indexToShowHF)
+  }, [location, index])
+
+  return (
+    <div>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/free-courses/info" element={<YtPlaylist />} />
+        <Route path='/course/info/:id' element={<CourseModule />} />
+        <Route path='/free-courses' element={<FreeCourses />} />
+        <Route path='/paid-courses' element={<PaidCourses />} />
+        <Route path='/search' element={<SearchCourse />} />
+        <Route path="/*" element={<Page_Not_Found />} />
+
+        <Route path="/admin/edit" element={<EditCourses />} />
+        <Route path="/admin/editReview/:index" element={<EditReviews />} />
+      </Routes>
+      {ShowHF && <div>
         <div>
           <a href="https://wa.link/mzvlws">
             <img style={{ position: "fixed", right: 0, bottom: "10px", width: "70px" }} src="WhatsAppLogo.webp" alt="" />
           </a>
         </div>
         <Footer />
-      </BrowserRouter>
+      </div>}
     </div>
-  );
+  )
 }
 
 export default App;

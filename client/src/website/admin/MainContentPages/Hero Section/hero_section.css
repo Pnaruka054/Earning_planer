@@ -1,0 +1,387 @@
+.firstProject {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.firstProject form {
+    background-color: white;
+    padding: 10px;
+    width: 98%;
+    border-radius: 10px;
+}
+
+.firstProject legend {
+    border-bottom: 1px solid black;
+}
+
+
+.firstProject table tr td {
+    padding: 10px;
+}
+
+.firstProject table tr td input {
+    width: 100%;
+    padding-left: 5px;
+}
+
+.adminButtonFirst {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.adminBTN1,
+.adminBTN2 {
+    padding: 5px 15px;
+    font-size: 20px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+}
+
+.adminBTN1:hover,
+.adminBTN2:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.adminButtonClicked {
+    transform: scale(0.99, 0.99);
+    box-shadow: 0 0 0 2px black inset;
+}
+
+/* *************************************************************************************** */
+
+.AddProjectsDetailDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.AddProjectsDetailDiv form {
+    background-color: white;
+    padding: 10px;
+    width: 98%;
+    border-radius: 10px;
+}
+
+.AddProjectsDetailDiv legend {
+    border-bottom: 1px solid black;
+}
+
+.AddProjectsDetailDiv table {
+    width: 100%;
+}
+
+.AddProjectsDetailDiv table tr td {
+    padding: 10px;
+}
+
+.AddProjectsDetailDiv table tr td input {
+    width: 100%;
+}
+
+.ProjectTitleTextAria {
+    width: 100%;
+    height: 70px;
+    resize: none;
+    padding: 5px;
+}
+
+.ProjectDetailsStyleDiv {
+    margin: auto;
+    width: 98%;
+    font-weight: bold;
+}
+
+.ProjectDiscriptionAria {
+    width: 100%;
+    height: 50vh;
+    resize: none;
+    padding: 5px;
+}
+
+.ProjectDetailsStyleDiv button {
+    padding: 2px auto;
+    width: 50px;
+}
+
+.ProjectDetailsStyleDiv button:nth-child(2) {
+    margin-left: 10px;
+    font-family: "Noto Sans Old South Arabian", sans-serif;
+}
+
+.adminButtonFirst {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.adminBTN3,
+.adminBTN4 {
+    padding: 5px 15px;
+    font-size: 20px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+}
+
+.adminBTN3:hover,
+.adminBTN4:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.adminButtonClicked {
+    transform: scale(0.99, 0.99);
+    box-shadow: 0 0 0 2px black inset;
+}
+
+/* Sabhi browsers ke liye */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-outer-spin-button-inner-spin-button,
+input[type="number"]::-webkit-inner-spin-button-inner-spin-button,
+input[type="number"]::-webkit-inner-spin-button-inner-spin-button-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button-inner-spin-button-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button-inner-spin-button-inner-spin-button-inner-spin-button,
+input[type="number"]::-webkit-inner-spin-button-inner-spin-button-inner-spin-button-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button-inner-spin-button-inner-spin-button-inner-spin-button-inner-spin-button,
+input[type="number"]::-webkit-inner-spin-button-inner-spin-button-inner-spin-button-inner-spin-button-inner-spin-button-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    /* Firefox ke liye */
+}
+
+.FirstProjectRelative {
+    position: relative;
+}
+
+.FirstProjectLoadingDiv {
+    display: none;
+}
+
+.FirstProjectLoading {
+    background-color: rgba(0, 0, 0, 0.377);
+    height: 100vh;
+    width: 80%;
+    position: fixed;
+    font-size: 50px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.FirstProjectLoadingBefore {
+    background-color: rgba(0, 0, 0, 0.377);
+    height: 100vh;
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.FirstProjectLoadingBefore div {
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.FirstProjectLoadingBefore .fa-spinner-third {
+    font-size: 50px;
+}
+
+.FirstProjectLoadingBefore div i {
+    margin-left: 5px;
+    margin-top: 2px;
+}
+
+@media (max-width: 850px){
+    .FirstProjectEnterName td:first-child,
+    .FirstProjectEnterUserName td:first-child,
+    .FirstProjectEnterLikes td:first-child,
+    .FirstProjectUpload td:first-child,
+    .FirstProjectEnterTitle td:first-child,
+    .FirstProjectEnterDiscription td:first-child {
+        font-size: 1.1rem;
+        width: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .FirstProjectLoading {
+        height: 100vh;
+        width: 100%;
+    }
+}
+
+@media (max-width: 683px) {
+
+    .FirstProjectEnterName td:first-child,
+    .FirstProjectEnterUserName td:first-child,
+    .FirstProjectEnterLikes td:first-child,
+    .FirstProjectUpload td:first-child,
+    .FirstProjectEnterTitle td:first-child,
+    .FirstProjectEnterDiscription td:first-child {
+        font-size: 1.2rem;
+        width: 240px;
+    }
+
+    .FirstProjectDetailsRequire p,
+    .FirstProjectEnterName td:nth-child(2) p,
+    .FirstProjectEnterUserName td:nth-child(2) p,
+    .FirstProjectEnterLikes td:nth-child(2) p,
+    .FirstProjectUpload td:nth-child(2) p {
+        font-size: 0.9rem;
+    }
+
+    .FirstProjectDetailsRequire textarea,
+    .FirstProjectUpload td:nth-child(2) input,
+    .FirstProjectEnterLikes td:nth-child(2) input,
+    .FirstProjectEnterName td:nth-child(2) input,
+    .FirstProjectEnterUserName td:nth-child(2) input {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 621px) {
+    .FirstProjectLegend {
+        font-size: 1.3rem;
+    }
+
+    .FirstProjectEnterName td:first-child,
+    .FirstProjectEnterUserName td:first-child,
+    .FirstProjectEnterLikes td:first-child,
+    .FirstProjectUpload td:first-child,
+    .FirstProjectEnterTitle td:first-child,
+    .FirstProjectEnterDiscription td:first-child {
+        font-size: 1.1rem;
+        width: 220px;
+    }
+
+    .FirstProjectDetailsRequire p,
+    .FirstProjectEnterName td:nth-child(2) p,
+    .FirstProjectEnterUserName td:nth-child(2) p,
+    .FirstProjectEnterLikes td:nth-child(2) p,
+    .FirstProjectUpload td:nth-child(2) p {
+        font-size: 0.7rem;
+    }
+
+    .FirstProjectDetailsRequire textarea,
+    .FirstProjectUpload td:nth-child(2) input,
+    .FirstProjectEnterLikes td:nth-child(2) input,
+    .FirstProjectEnterName td:nth-child(2) input,
+    .FirstProjectEnterUserName td:nth-child(2) input {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 525px) {
+    .FirstProjectLegend {
+        font-size: 1.1rem;
+    }
+
+    .FirstProjectEnterName td:first-child,
+    .FirstProjectEnterUserName td:first-child,
+    .FirstProjectEnterLikes td:first-child,
+    .FirstProjectUpload td:first-child,
+    .FirstProjectEnterTitle td:first-child,
+    .FirstProjectEnterDiscription td:first-child {
+        font-size: 0.9rem;
+        width: 180px;
+    }
+
+    .FirstProjectEnterName td:nth-child(2) p,
+    .FirstProjectEnterUserName td:nth-child(2) p,
+    .FirstProjectEnterLikes td:nth-child(2) p,
+    .FirstProjectUpload td:nth-child(2) p,
+    .FirstProjectDetailsRequire p {
+        font-size: 0.6rem;
+    }
+
+    .FirstProjectDetailsRequire textarea,
+    .FirstProjectUpload td:nth-child(2) input,
+    .FirstProjectEnterLikes td:nth-child(2) input,
+    .FirstProjectEnterName td:nth-child(2) input,
+    .FirstProjectEnterUserName td:nth-child(2) input {
+        font-size: 0.8rem;
+    }
+
+    #adminBTN1,
+    #adminBTN2 {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 393px) {
+
+    .FirstProjectEnterName td:first-child,
+    .FirstProjectEnterUserName td:first-child,
+    .FirstProjectEnterLikes td:first-child,
+    .FirstProjectUpload td:first-child,
+    .FirstProjectEnterTitle td:first-child,
+    .FirstProjectEnterDiscription td:first-child {
+        width: 190px;
+        padding: 0;
+    }
+
+    .FirstProjectEnterName td,
+    .FirstProjectEnterUserName td,
+    .FirstProjectEnterLikes td,
+    .FirstProjectUpload td,
+    .FirstProjectEnterTitle td,
+    .FirstProjectEnterDiscription td {
+        display: block;
+    }
+
+    .FirstProjectEnterName td:nth-child(2) p,
+    .FirstProjectEnterUserName td:nth-child(2) p,
+    .FirstProjectEnterLikes td:nth-child(2) p,
+    .FirstProjectUpload td:nth-child(2) p,
+    .FirstProjectDetailsRequire p {
+        font-size: 0.5rem;
+    }
+
+    .ProjectDetailsTR {
+        padding-bottom: 20px;
+    }
+
+    .AddProjectsDetailDiv table tr td {
+        padding-top: 0px;
+    }
+
+    .firstProject table tr td {
+        padding-top: 0;
+        padding-bottom: 20px;
+    }
+}
+
+@media (max-width: 371px) {
+    .FirstProjectLegend {
+        font-size: 1.1rem;
+    }
+}

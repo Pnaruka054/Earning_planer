@@ -1,20 +1,12 @@
 const mongoose = require('mongoose')
 
-const contentSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    liveClasses: { type: String, required: true },
-    projects: { type: String, required: true },
-    assignments: { type: String, required: true },
-    content: [{ type: String, required: true }],
-});
-
 const moduleSchema = new mongoose.Schema({
     id: { type: Number, required: true },
     title: { type: String, required: true },
     liveClasses: { type: String, required: true },
     projects: { type: String, required: true },
     assignments: { type: String, required: true },
-    content: [contentSchema],
+    content: [{ type: String, required: true }],
 });
 
 const paidCourseSchema = new mongoose.Schema({

@@ -11,7 +11,8 @@ const YtPlaylist = () => {
     const location = useLocation();
     const course = location.state;
     const query = new URLSearchParams(location.search);
-    const playlistId = query.get('list'); // Extracting playlist ID from query params
+    const playlistId = query.get('list');
+    const playlistTitle = query.get('title');
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -128,7 +129,7 @@ const YtPlaylist = () => {
                 <NavBar />
             </div>
             <div className="container yt-playlist mt-5">
-                <h2 className="text-center mb-4">{course.title}</h2>
+                <h2 className="text-center mb-4">{playlistTitle}</h2>
                 <div className="row">
                     {currentVideos.map((video) => (
                         <div key={video.id} className="col-md-4 mb-4">

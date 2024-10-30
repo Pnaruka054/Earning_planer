@@ -1,0 +1,70 @@
+.courses_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.courses_row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.courses_card {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    margin-bottom: 20px; /* Adjust as necessary */
+}
+
+.courses_link_card {
+    text-align: center;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Makes sure all cards have equal height */
+    width: 100%; /* Ensures full width */
+    max-width: 400px; /* Optional: Set a max width for cards */
+    border: 1px solid #ddd; /* Optional: Add border for clarity */
+    border-radius: 5px; /* Optional: Add border radius for a nicer look */
+    overflow: hidden; /* Prevents overflow */
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease; 
+}
+
+.courses_link_card:hover {
+    transform: scale(1.05); /* Scale up the card on hover */
+}
+
+.courses_wrapper {
+    flex-grow: 1; /* Allows the video wrapper to grow */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center contents */
+    justify-content: center; /* Center contents */
+}
+
+.course-image {
+    width: 100%; /* Ensures the image covers the entire width */
+    aspect-ratio: 16/9;
+    height: auto; /* Maintains aspect ratio */
+    max-height: 200px; /* Set a max height for images */
+    object-fit: cover; /* Ensures the image fits nicely within its container */
+}
+
+.badge {
+    position: absolute;
+    width: 100px;
+    top: 50px; /* Adjust as necessary */
+    left: -20px; /* Position it slightly outside the card */
+    background-color: rgba(0, 132, 22, 0.8); /* Color of the ribbon */
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-weight: bold;
+    z-index: 1; /* Ensure it is above other elements */
+    transform: rotate(-45deg);
+    transform-origin: 0 0; /* Adjust rotation origin */
+}

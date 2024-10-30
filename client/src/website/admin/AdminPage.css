@@ -1,0 +1,115 @@
+.AdminPageDiv {
+    background-color: rgb(218, 218, 218);
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.AdminPageMenuIcon{
+    display: none;
+}
+
+.sideBarDiv {
+    background-color: rgb(56, 56, 56);
+    position: relative;
+}
+
+.sideBarDivFixed {
+    position: sticky;
+    top: 10px;
+    left: 10px;
+    height: 99.1vh;
+}
+
+.addProjects {
+    padding: 10px 20px;
+    color: white;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    border-top: 1px solid rgb(129, 129, 129);
+    border-bottom: 1px solid rgb(129, 129, 129);
+}
+
+.sideBarButtonClicked {
+    background-color: rgb(255, 0, 0);
+}
+
+@media (max-width: 768px) {
+    .AdminPageDiv {
+        grid-template-rows: 66px 100%;
+        grid-auto-flow: column;
+    }
+
+    .sideBarDiv {
+        width: 100vw;
+        height: auto;
+    }
+
+    .sideBarDivFixed {
+        display: flex;
+        width: 100vw;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        padding-bottom: 10px;
+        background-color: rgb(56, 56, 56);
+        z-index: 1;
+    }
+
+    .adMainContent {
+        width: 100vw;
+    }
+}
+
+@media (max-width: 525px) {
+    .addProjects {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+        margin-top: 5px;
+    }
+
+    .AdminPageDiv {
+        grid-template-rows: 45px 100%;
+        grid-auto-flow: column;
+    }
+
+    .sideBarDivFixed {
+        top: 0px;
+        left: 0px;
+        padding-bottom: 5px;
+        background-color: rgb(56, 56, 56);
+        z-index: 1;
+    }
+}
+
+@media (max-width: 283px) {
+    .AdminPageMenuIcon{
+        display: flex;
+        align-items: center;
+        color: white;
+        height: 45px;
+        position: fixed;
+        width: 100vw;
+        top: 0px;
+        left: 0px;
+        background-color: rgb(56, 56, 56);
+        z-index: 1;
+    }
+
+    .AdminPageMenuIcon i{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: 45px;
+    }
+
+    .AdminPageMenuIcon i:hover{
+        background-color: rgb(37, 37, 37);
+    }
+
+    .sideBarDivFixed{
+        display: none;
+    }
+}

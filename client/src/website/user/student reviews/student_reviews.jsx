@@ -2,41 +2,43 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './student_reviews.css';
 import { Modal } from 'react-bootstrap'; // Import Modal from Bootstrap
+import axios from 'axios';
+import Loading from '../Loading/Loading';
 
-const reviews = [
-    {
-        name: 'Raju',
-        image: 'https://res.cloudinary.com/dm8miilli/image/upload/v1719146354/mwi4mlmbmiia9rmjcj5z.jpg',
-        video: 'https://res.cloudinary.com/dm8miilli/video/upload/v1730216473/15465878-hd_1080_1920_30fps_pvkg3i.mp4',
-        comment: 'This program exceeded my expectations! The structured content made complex concepts easier to grasp. The instructors were knowledgeable and approachable, always ready to help. I particularly appreciated the interactive components, which made learning enjoyable and practical. I feel much more confident in my skills now. Highly recommended for anyone looking to enhance their knowledge!',
-        rating: 5,
-        course: 'Advanced Skills Development'
-    },
-    {
-        name: 'Student B',
-        image: 'https://res.cloudinary.com/dm8miilli/image/upload/v1719146354/mwi4mlmbmiia9rmjcj5z.jpg',
-        video: 'https://res.cloudinary.com/dm8miilli/video/upload/v1730216473/15465878-hd_1080_1920_30fps_pvkg3i.mp4',
-        comment: 'My experience in this program was enriching! I gained practical skills and a deeper understanding of the subject. The instructors were patient and effective in breaking down complex topics. Collaborating with fellow students was a highlight, creating a supportive learning environment. I would recommend this program to anyone eager to learn and grow!',
-        rating: 4,
-        course: 'Fundamentals of Learning'
-    },
-    {
-        name: 'Student C',
-        image: 'https://res.cloudinary.com/dm8miilli/image/upload/v1719146354/mwi4mlmbmiia9rmjcj5z.jpg',
-        video: 'https://res.cloudinary.com/dm8miilli/video/upload/v1730216473/15465878-hd_1080_1920_30fps_pvkg3i.mp4',
-        comment: 'I highly recommend this program! It skillfully blends theory with practical application. The instructors were passionate and engaging, making each class enjoyable. Guest speakers provided real-world insights that enriched our learning. The projects challenged my critical thinking, and I gained invaluable skills for my career. A truly rewarding experience!',
-        rating: 5,
-        course: 'Creative Problem Solving'
-    },
-    {
-        name: 'Student D',
-        image: 'https://res.cloudinary.com/dm8miilli/image/upload/v1719146354/mwi4mlmbmiia9rmjcj5z.jpg',
-        video: 'https://res.cloudinary.com/dm8miilli/video/upload/v1730216473/15465878-hd_1080_1920_30fps_pvkg3i.mp4',
-        comment: 'This program transformed my approach to learning. The organization and quality of materials were impressive. Instructors made complex topics accessible, fostering a collaborative atmosphere. Practical assignments allowed me to apply theories effectively. I left motivated and equipped with new skills. If you’re considering this program, I urge you to enroll!',
-        rating: 5,
-        course: 'Professional Development Mastery'
-    },
-];
+// const reviews = [
+//     {
+//         name: 'Raju',
+//         image: 'https://res.cloudinary.com/dm8miilli/image/upload/v1719146354/mwi4mlmbmiia9rmjcj5z.jpg',
+//         video: 'https://res.cloudinary.com/dm8miilli/video/upload/v1730216473/15465878-hd_1080_1920_30fps_pvkg3i.mp4',
+//         comment: 'This program exceeded my expectations! The structured content made complex concepts easier to grasp. The instructors were knowledgeable and approachable, always ready to help. I particularly appreciated the interactive components, which made learning enjoyable and practical. I feel much more confident in my skills now. Highly recommended for anyone looking to enhance their knowledge!',
+//         rating: 5,
+//         course: 'Advanced Skills Development'
+//     },
+//     {
+//         name: 'Student B',
+//         image: 'https://res.cloudinary.com/dm8miilli/image/upload/v1719146354/mwi4mlmbmiia9rmjcj5z.jpg',
+//         video: 'https://res.cloudinary.com/dm8miilli/video/upload/v1730216473/15465878-hd_1080_1920_30fps_pvkg3i.mp4',
+//         comment: 'My experience in this program was enriching! I gained practical skills and a deeper understanding of the subject. The instructors were patient and effective in breaking down complex topics. Collaborating with fellow students was a highlight, creating a supportive learning environment. I would recommend this program to anyone eager to learn and grow!',
+//         rating: 4,
+//         course: 'Fundamentals of Learning'
+//     },
+//     {
+//         name: 'Student C',
+//         image: 'https://res.cloudinary.com/dm8miilli/image/upload/v1719146354/mwi4mlmbmiia9rmjcj5z.jpg',
+//         video: 'https://res.cloudinary.com/dm8miilli/video/upload/v1730216473/15465878-hd_1080_1920_30fps_pvkg3i.mp4',
+//         comment: 'I highly recommend this program! It skillfully blends theory with practical application. The instructors were passionate and engaging, making each class enjoyable. Guest speakers provided real-world insights that enriched our learning. The projects challenged my critical thinking, and I gained invaluable skills for my career. A truly rewarding experience!',
+//         rating: 5,
+//         course: 'Creative Problem Solving'
+//     },
+//     {
+//         name: 'Student D',
+//         image: 'https://res.cloudinary.com/dm8miilli/image/upload/v1719146354/mwi4mlmbmiia9rmjcj5z.jpg',
+//         video: 'https://res.cloudinary.com/dm8miilli/video/upload/v1730216473/15465878-hd_1080_1920_30fps_pvkg3i.mp4',
+//         comment: 'This program transformed my approach to learning. The organization and quality of materials were impressive. Instructors made complex topics accessible, fostering a collaborative atmosphere. Practical assignments allowed me to apply theories effectively. I left motivated and equipped with new skills. If you’re considering this program, I urge you to enroll!',
+//         rating: 5,
+//         course: 'Professional Development Mastery'
+//     },
+// ];
 
 const StudentReviews = () => {
     const [currentIndex, setCurrentIndex] = useState(1);
@@ -44,6 +46,19 @@ const StudentReviews = () => {
     const [isAutoScrollActive, setIsAutoScrollActive] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [currentVideo, setCurrentVideo] = useState('');
+    const [reviews, setReviews] = useState([]);
+
+    useEffect(() => {
+        let fetchData = async()=>{
+            try {
+                let response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/reviews/studentReviewsGet`)
+                setReviews(response.data.msg)
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData()
+    }, []);
 
     const nextReview = () => {
         if (!isAutoScrollActive) return;
@@ -102,6 +117,10 @@ const StudentReviews = () => {
             setIsAutoScrollActive(true);
         }, 3000);
     };
+
+    if (reviews.length === 0) {
+        return <Loading />
+    }
 
     return (
         <div data-aos="zoom-in-down" id='student_reviews' className="student-reviews-container container mt-2 shadow-sm card">

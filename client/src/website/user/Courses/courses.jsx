@@ -97,22 +97,20 @@ const Courses = ({ courses, heading, home, database }) => {
 
     return (
         <div>
-            {!home && <div>
-                <NavBar />
-            </div>}
-            <div className="container mt-2">
+            {!home && <div><NavBar /></div>}
+            <div className="container courses_container mt-2">
                 <h2 className={`text-center mb-4 ${home ? "d-none" : "d-block"}`}>{heading}</h2>
-                <div className="row">
+                <div className="row courses_row">
                     {currentCourses.map((course, index) => (
-                        <div key={index} data-aos="zoom-in-up" className="col-12 col-md-4 mb-4">
+                        <div key={index} data-aos="zoom-in-up" className="col-md-4 mb-4 courses_card">
                             <Link
-                            className='text-decoration-none text-black'
-                                to={course.playlist_id ? `/free-courses/info?list=${course.playlist_id}` : `/course/info/${course.title.replaceAll(" ", "")}`}
+                                className='text-decoration-none text-black courses_link_card'
+                                to={course.playlist_id ? `/free-courses/info?list=${course.playlist_id}&title=${course.title}` : `/course/info/${course.title.replaceAll(" ", "")}`}
                                 state={course}
                             >
-                                <div className="course-card p-3">
+                                <div className="courses_wrapper">
                                     {database && (
-                                        <div className={`badge ${course.modules? "bg-success": "bg-primary"}`}>
+                                        <div className={`badge ${course.modules ? "bg-success" : "bg-primary"}`}>
                                             {course.modules ? "Paid" : "Free"}
                                         </div>
                                     )}
@@ -132,6 +130,7 @@ const Courses = ({ courses, heading, home, database }) => {
             </div>
         </div>
     );
+
 };
 
 export default Courses;
