@@ -10,8 +10,6 @@
 
 #course_module_top_details {
     box-shadow: 0px 0px 10px black;
-    background: url('/course_2.gif') no-repeat right center;
-    background-size: contain;
 }
 
 #course_module_top_details p {

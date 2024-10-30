@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
@@ -20,9 +20,13 @@ function AddCourses() {
         modules: [], // Only for paid courses
     });
     const [imageError, setImageError] = useState('');
+    const [gifImage, setGifImage] = useState(null);
+    const [gifError, setGifError] = useState('');
     const [moduleContent, setModuleContent] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false); // State for managing submit state
     const navigate = useNavigate();
+    const fileInputRef = useRef(null);
+
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -69,6 +73,23 @@ function AddCourses() {
                     setCourseDetails((prevDetails) => ({ ...prevDetails, image: file }));
                 }
             };
+        }
+    };
+
+    const handleGifFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const validExtensions = ['gif'];
+            const isValidExtension = validExtensions.includes(file.name.split('.').pop().toLowerCase());
+
+            if (!isValidExtension) {
+                setGifError('Only GIF files are allowed.');
+                setGifImage(null);
+                e.target.value = '';
+            } else {
+                setGifError('');
+                setGifImage(file);
+            }
         }
     };
 
@@ -120,9 +141,12 @@ function AddCourses() {
         // If the course is free, remove modules from the data
         if (courseType === 'free') {
             delete courseData.modules;
+            delete courseData.gifImage
+        } else {
+            delete courseData.playlist_id
         }
 
-        // Prepare form data for image upload
+        // Prepare form data for image and GIF upload
         const formData = new FormData();
         Object.keys(courseData).forEach((key) => {
             if (key === 'image') {
@@ -134,6 +158,11 @@ function AddCourses() {
             }
         });
 
+        // Include gifImage in the form data
+        if (gifImage) {
+            formData.append('gifImage', gifImage);
+        }
+
         try {
             const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/courses/userCoursePost`, formData, {
                 headers: {
@@ -143,6 +172,8 @@ function AddCourses() {
 
             if (response.status === 200 || response.status === 201) {
                 alert('Course added successfully!');
+                setCourses((prevCourses) => [...prevCourses, response.data.course]);
+
                 // Reset form fields after successful submission
                 setCourseDetails({
                     title: '',
@@ -155,6 +186,8 @@ function AddCourses() {
                     modules: [],
                 });
                 document.querySelector('input[type=file]').value = '';
+                document.querySelector('input[type=file]').value = '';
+                setGifImage(null); // Reset GIF image
                 setSearchTerm('');
                 setCourseType('free'); // Reset course type to free
             }
@@ -170,11 +203,15 @@ function AddCourses() {
         navigate('/admin/edit', { state: { course } });
     };
 
-    const handleDelete = async (courseId, courseImage) => {
+    const handleDelete = async (course) => {
         if (window.confirm('Are you sure you want to delete this course?')) {
             try {
-                await axios.delete(`${import.meta.env.VITE_SERVER_URL}/courses/userDeleteCourse/${courseId}?courseImage=${courseImage}`);
-                setCourses((prevCourses) => prevCourses.filter(course => course._id !== courseId));
+                let url = `${import.meta.env.VITE_SERVER_URL}/courses/userDeleteCourse/${course._id}?courseImage_url=${course.image}`;
+                if (course.gifImage) {
+                    url += `&courseGif_url=${course.gifImage}`;
+                }
+                await axios.delete(url);
+                setCourses((prevCourses) => prevCourses.filter(courses => courses._id !== course._id));
             } catch (error) {
                 console.error('Error deleting course:', error);
                 alert('There was an error deleting the course.');
@@ -202,6 +239,22 @@ function AddCourses() {
             playlist_id: playlistId,
         }));
     };
+
+    const deleteModule = (index) => {
+        const updatedModules = [...courseDetails.modules];
+        updatedModules.splice(index, 1); // Remove the module at the specified index
+        setCourseDetails((prevDetails) => ({
+            ...prevDetails,
+            modules: updatedModules,
+        }));
+    };
+
+    useEffect(() => {
+        if (courseType == 'paid') {
+            // Reset the file input if courseType is not 'paid'
+            fileInputRef.current.value = '';
+        }
+    }, [courseType]);
 
     if (loading) {
         return <Loading />;
@@ -255,6 +308,13 @@ function AddCourses() {
                     {imageError && <div className="text-danger mt-2">{imageError}</div>}
                 </div>
                 {courseType === 'paid' && (
+                    <div className="mb-3">
+                        <label className="form-label">Upload GIF Image:</label>
+                        <input type="file" ref={fileInputRef} className="form-control" onChange={handleGifFileChange} required />
+                        {gifError && <div className="text-danger mt-2">{gifError}</div>}
+                    </div>
+                )}
+                {courseType === 'paid' && (
                     <div>
                         <h3 className="mb-3">Modules</h3>
                         {courseDetails.modules.map((module, index) => (
@@ -304,23 +364,30 @@ function AddCourses() {
                                         onChange={(e) => setModuleContent(e.target.value)}
                                         placeholder="Add content here..."
                                     />
-                                    <button
-                                        type="button"
-                                        className="btn btn-secondary"
-                                        onClick={() => addContentToModule(index)}
-                                    >
-                                        Add
-                                    </button>
                                 </div>
                                 <div className="mt-2">
                                     <strong>Current Content:</strong> {module.content.join(', ')}
                                 </div>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger mt-2"
+                                    onClick={() => deleteModule(index)} // Call delete function on click
+                                >
+                                    <i className="fa-regular fa-trash-can"></i>
+                                </button>
+                                <button
+                                        type="button"
+                                        className="btn btn-secondary mt-2 mx-2"
+                                        onClick={() => addContentToModule(index)}
+                                    >
+                                        <i className="fa-solid fa-plus"></i>
+                                    </button>
                             </div>
                         ))}
-                        <button type="button" className="btn btn-primary" onClick={addModule}>Add Module</button>
+                        <button type="button" className="btn btn-dark" onClick={addModule}>Add Module</button>
                     </div>
                 )}
-                <button type="submit" className="btn btn-primary mt-3" disabled={isSubmitting}>
+                <button type="submit" className="btn btn-primary mt-3 w-100" disabled={isSubmitting}>
                     {isSubmitting ? 'Submitting...' : 'Submit'}
                 </button>
             </form>
@@ -336,15 +403,17 @@ function AddCourses() {
             <h3>Course List</h3>
             <ul className="list-group">
                 {filteredCourses.reverse().map((course, index) => (
-                    <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                    <li key={index} className="list-group-item d-flex justify-content-between align-items-center row">
+                        <div className='col-md-9 col-sm-8 col-7'>
                         {course.title}
-                        <div>
+                        </div>
+                        <div className='col-md-3 col-sm-4 col-5'>
                             <button className="btn btn-info btn-sm me-2" onClick={() => handleEdit(course)}>Edit</button>
                             <button
                                 className="btn btn-danger btn-sm"
-                                onClick={() => handleDelete(course._id, course.image)}
+                                onClick={() => handleDelete(course)}
                             >
-                                <i className="fa-solid fa-trash"></i>
+                                Delete
                             </button>
                         </div>
                     </li>

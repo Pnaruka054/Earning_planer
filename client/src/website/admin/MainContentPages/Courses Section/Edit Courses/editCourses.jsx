@@ -77,100 +77,100 @@ function EditCourses() {
     };
 
     return (
-        <div style={{background:"#dadada", height:"100vh"}}>
+        <div style={{ background: "#dadada", height: "100vh" }}>
             <div className='container'>
-            <button className='btn btn-secondary my-3' onClick={handleExitButtonClick}>
-                <i className="fa-solid fa-left-to-bracket"></i> Exit
-            </button>
-            <div className='card mb-5'>
-                <div className='card-body'>
-                    <h5 className='card-title'>Edit Course Information</h5>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label className='form-label'>Course Title</label>
-                            <input type='text' className='form-control' value={title} onChange={handleInputChange(setTitle)} required />
-                        </div>
-                        <div className="mb-3">
-                            <label className='form-label'>Duration</label>
-                            <input type='text' className='form-control' value={duration} onChange={handleInputChange(setDuration)} required />
-                        </div>
-                        <div className="mb-3">
-                            <label className='form-label'>Mode</label>
-                            <input type='text' className='form-control' value={mode} onChange={handleInputChange(setMode)} required />
-                        </div>
-                        <div className="mb-3">
-                            <label className='form-label'>Live Sessions</label>
-                            <input type='text' className='form-control' value={liveSessions} onChange={handleInputChange(setLiveSessions)} required />
-                        </div>
-                        <div className="mb-3">
-                            <label className='form-label'>Projects</label>
-                            <input type='text' className='form-control' value={projects} onChange={handleInputChange(setProjects)} required />
-                        </div>
-                        <div className="mb-3">
-                            <label className='form-label'>Upload Image (1280 x 720)</label>
-                            <input type='file' className='form-control' accept="image/*" onChange={handleImageChange} />
-                            {imageError && <div className="text-danger mt-2">{imageError}</div>}
-                        </div>
-
-                        {modules.length > 0 && (
-                            <div>
-                                <h5 className='mt-4'>Modules</h5>
-                                {modules.map((module, index) => (
-                                    <div key={index} className='mb-3 border p-3 rounded'>
-                                        <h6>Module {index + 1}</h6>
-                                        <div className="mb-2">
-                                            <label className='form-label'>Module Title</label>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                value={module.title}
-                                                onChange={handleModuleChange(index, 'title')}
-                                                required
-                                            />
-                                        </div>
-                                        <div className="mb-2">
-                                            <label className='form-label'>Live Classes</label>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                value={module.liveClasses}
-                                                onChange={handleModuleChange(index, 'liveClasses')}
-                                                required
-                                            />
-                                        </div>
-                                        <div className="mb-2">
-                                            <label className='form-label'>Projects</label>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                value={module.projects}
-                                                onChange={handleModuleChange(index, 'projects')}
-                                                required
-                                            />
-                                        </div>
-                                        <div className="mb-2">
-                                            <label className='form-label'>Content (comma separated)</label>
-                                            <textarea
-                                                className='form-control'
-                                                value={module.content.join(', ')}
-                                                onChange={(e) => {
-                                                    const updatedModules = [...modules];
-                                                    updatedModules[index].content = e.target.value.split(', ');
-                                                    setModules(updatedModules);
-                                                }}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
+                <button className='btn btn-secondary my-3' onClick={handleExitButtonClick}>
+                    <i className="fa-solid fa-left-to-bracket"></i> Exit
+                </button>
+                <div className='card mb-5'>
+                    <div className='card-body'>
+                        <h5 className='card-title'>Edit Course Information</h5>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                                <label className='form-label'>Course Title</label>
+                                <input type='text' className='form-control' value={title} onChange={handleInputChange(setTitle)} required />
                             </div>
-                        )}
+                            <div className="mb-3">
+                                <label className='form-label'>Duration</label>
+                                <input type='text' className='form-control' value={duration} onChange={handleInputChange(setDuration)} required />
+                            </div>
+                            <div className="mb-3">
+                                <label className='form-label'>Mode</label>
+                                <input type='text' className='form-control' value={mode} onChange={handleInputChange(setMode)} required />
+                            </div>
+                            <div className="mb-3">
+                                <label className='form-label'>Live Sessions</label>
+                                <input type='text' className='form-control' value={liveSessions} onChange={handleInputChange(setLiveSessions)} required />
+                            </div>
+                            <div className="mb-3">
+                                <label className='form-label'>Projects</label>
+                                <input type='text' className='form-control' value={projects} onChange={handleInputChange(setProjects)} required />
+                            </div>
+                            <div className="mb-3">
+                                <label className='form-label'>Upload Image (1280 x 720)</label>
+                                <input type='file' className='form-control' accept="image/*" onChange={handleImageChange} />
+                                {imageError && <div className="text-danger mt-2">{imageError}</div>}
+                            </div>
 
-                        <button type='submit' className='btn btn-primary w-100'>Update</button>
-                    </form>
+                            {modules.length > 0 && (
+                                <div>
+                                    <h5 className='mt-4'>Modules</h5>
+                                    {modules.map((module, index) => (
+                                        <div key={index} className='mb-3 border p-3 rounded'>
+                                            <h6>Module {index + 1}</h6>
+                                            <div className="mb-2">
+                                                <label className='form-label'>Module Title</label>
+                                                <input
+                                                    type='text'
+                                                    className='form-control'
+                                                    value={module.title}
+                                                    onChange={handleModuleChange(index, 'title')}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="mb-2">
+                                                <label className='form-label'>Live Classes</label>
+                                                <input
+                                                    type='text'
+                                                    className='form-control'
+                                                    value={module.liveClasses}
+                                                    onChange={handleModuleChange(index, 'liveClasses')}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="mb-2">
+                                                <label className='form-label'>Projects</label>
+                                                <input
+                                                    type='text'
+                                                    className='form-control'
+                                                    value={module.projects}
+                                                    onChange={handleModuleChange(index, 'projects')}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="mb-2">
+                                                <label className='form-label'>Content (comma separated)</label>
+                                                <textarea
+                                                    className='form-control'
+                                                    value={module.content.join(', ')}
+                                                    onChange={(e) => {
+                                                        const updatedModules = [...modules];
+                                                        updatedModules[index].content = e.target.value.split(', ');
+                                                        setModules(updatedModules);
+                                                    }}
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            <button type='submit' className='btn btn-primary w-100'>Update</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     );
 }

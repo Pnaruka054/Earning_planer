@@ -45,7 +45,7 @@ const userCoursesGet = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            msg: courses 
+            msg: courses
         });
     } catch (error) {
         return res.status(500).json({
@@ -55,7 +55,7 @@ const userCoursesGet = async (req, res) => {
     }
 };
 
-const userAllCoursesGet = async(req,res)=>{
+const userAllCoursesGet = async (req, res) => {
     try {
         const paid_courses = await paidCourseModel.find();
         const free_courses = await freeCourseModel.find();
@@ -68,8 +68,30 @@ const userAllCoursesGet = async(req,res)=>{
 }
 
 const userDeleteCourse = async (req, res) => {
-    const { courseId } = req.params; 
+    const { courseId } = req.params;
+    const { courseImage_url, courseGif_url } = req.query;
+
+    const extractPublicId = (url) => {
+        // Implement your logic here to extract the public ID from the URL
+        // Example: If URL is "https://res.cloudinary.com/your_cloud_name/image/upload/v1615467850/sample.jpg"
+        // You would extract "sample" or "sample/v1615467850"
+        const segments = url.split('/');
+        return segments[segments.length - 1].split('.')[0]; // This is a basic example
+    };
+
     try {
+        // Step 1: Remove the image from Cloudinary
+        if (courseImage_url) {
+            const courseImage_url_publicId = extractPublicId(courseImage_url);
+            await cloudinary.uploader.destroy(courseImage_url_publicId);
+            if(courseGif_url){
+                const courseGif_url_publicId = extractPublicId(courseGif_url);
+                await cloudinary.uploader.destroy(courseGif_url_publicId);
+            }
+
+        }
+
+        // Step 2: Delete the course from the database
         const deletedFreeCourse = await freeCourseModel.findByIdAndDelete(courseId);
         const deletedPaidCourse = await paidCourseModel.findByIdAndDelete(courseId);
 
@@ -88,14 +110,14 @@ const userCoursePost = async (req, res) => {
     try {
         const { title, duration, mode, liveSessions, projects, modules, playlist_id } = req.body;
         let imageUrl;
+        let gifImage
 
         // Check if an image file was uploaded
-        if (req.file) {
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'courses', // Optional: specify a folder in Cloudinary
-                transformation: [{ width: 1280, height: 720, crop: 'limit' }],
-            });
-            imageUrl = result.secure_url; // Get the secure URL for the uploaded image
+        if (req.files) {
+            imageUrl = req.files.image[0].path;
+            if (req.files.gifImage) {
+                gifImage = req.files.gifImage[0].path;
+            }
         } else {
             return res.status(400).json({ message: 'Image upload is required.' });
         }
@@ -110,6 +132,7 @@ const userCoursePost = async (req, res) => {
                 liveSessions,
                 projects,
                 image: imageUrl,
+                gifImage,
                 modules: parsedModules.map((module, index) => ({
                     id: index + 1, // Assigning an ID based on the index
                     title: module.title,

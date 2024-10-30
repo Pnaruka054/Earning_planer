@@ -49,6 +49,7 @@
     .sideBarDivFixed {
         display: flex;
         width: 100vw;
+        height: auto;
         position: fixed;
         top: 0px;
         left: 0px;

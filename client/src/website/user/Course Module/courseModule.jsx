@@ -78,7 +78,7 @@ const CourseModule = () => {
             </div>
             <div className="container mt-5">
                 <h2 className="text-center mb-4">{courseDetails.title} Course Syllabus</h2>
-                <div id='course_module_top_details' className="p-4 rounded mb-4">
+                <div id='course_module_top_details' style={{ background: `url('${courseDetails.gifImage}') no-repeat right center`, backgroundSize: "contain" }} className="p-4 rounded mb-4">
                     <p><strong>Duration:</strong> {courseDetails.duration}</p>
                     <p><strong>Mode:</strong> {courseDetails.mode}</p>
                     <p><strong>Live Sessions:</strong> {courseDetails.liveSessions}</p>

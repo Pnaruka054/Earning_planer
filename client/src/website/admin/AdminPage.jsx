@@ -73,7 +73,7 @@ function AdminPage() {
                     </div>
                 </div>
             </div>
-            <div className='adMainContent'>
+            <div className='adMainContent'> 
                 {Adminside === refFirst && <AddCourses />}
                 {Adminside === refSecond && <HeroSection />}
                 {Adminside === refThird && <AddReviews />}

@@ -16,6 +16,7 @@ const paidCourseSchema = new mongoose.Schema({
     liveSessions: { type: String, required: true },
     projects: { type: String, required: true },
     image: { type: String, required: true },
+    gifImage: { type: String, required: true },
     modules: [moduleSchema],
 });
 
