@@ -111,7 +111,7 @@
     /* Width of your bullet image */
     height: 20px;
     /* Height of your bullet image */
-    background: url('list_verified.png') no-repeat center center;
+    background: url('/list_verified.png') no-repeat center center;
     /* Custom image as bullet */
     background-size: contain;
     /* Ensure the image fits */
