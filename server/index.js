@@ -7,6 +7,7 @@ const PORT = process.env.PORT
 const userForm_route = require('./routes/userForm_route')
 const userCourse_route = require('./routes/userCourse_route')
 const StudentReviews_route = require('./routes/StudentReviews_route')
+const heroSection_route = require('./routes/heroSection_route')
 const cloudinary = require('cloudinary').v2;
 
 app.use(cors())
@@ -33,6 +34,7 @@ modelCalled()
 app.use('/api', userForm_route)
 app.use('/courses', userCourse_route)
 app.use('/reviews', StudentReviews_route)
+app.use('/hero', heroSection_route)
 
 app.listen(PORT, () => {
     console.log(`server started on port - ${PORT}`)

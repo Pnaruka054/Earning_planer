@@ -16,18 +16,18 @@ const Home = () => {
     const [typingIndex, setTypingIndex] = useState(0);
     const [isTyping, setIsTyping] = useState(true);
     const [channelData, setChannelData] = useState(null);
+    const [headings, setHeadings] = useState([]);
+    const [images, setImages] = useState([]);
 
-    const headings = [
-        "Get Job-Ready with Our Industry-Focused Training Programs",
-        "Learn MERN Stack, Digital Marketing, Graphic Design & More!",
-        "Empowering Your Career with In-Demand IT Skills",
-    ];
+    const getDataBaseHero = async (req, res) => {
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/hero/heroGet`);
+        setHeadings(response.data.msg.map(obj => obj.typingText));
+        setImages(response.data.msg.map(obj => obj.images));
+    }
 
-    const images = [
-        "image1.jpg",
-        "image2.jpg",
-        "image3.jpg",
-    ];
+    useEffect(() => {
+        getDataBaseHero()
+    }, []);
 
     const reasons = [
         "Experienced Instructors with Industry Knowledge",
@@ -87,7 +87,7 @@ const Home = () => {
         }, 100); // Typing speed
 
         return () => clearTimeout(typingTimeout);
-    }, [typingIndex, isTyping, currentImageIndex]);
+    }, [typingIndex, isTyping, currentImageIndex, headings]);
 
     useEffect(() => {
         if (!isTyping && typingIndex === headings[currentImageIndex].length) {

@@ -1,7 +1,8 @@
 .loading-dark-container {
     background: rgba(0, 0, 0, 0.63);
     transition: background 0.5s ease-in-out;
-    position: absolute;
+    position: fixed;
+    overflow: hidden;
     top: 0;
     bottom: 0;
     right: 0;

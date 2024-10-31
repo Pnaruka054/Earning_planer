@@ -8,6 +8,10 @@
     display: none;
 }
 
+#AdminPageMenuContent div:hover{
+cursor: pointer;
+}
+
 .sideBarDiv {
     background-color: rgb(56, 56, 56);
     position: relative;

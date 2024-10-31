@@ -10,7 +10,7 @@ function AdminPage() {
     const mediaQuery = window.matchMedia('(max-width: 283px)');
 
     function sideBarFunction(event) {
-        if (event.currentTarget.innerText === 'First Project') {
+        if (event.currentTarget.innerText === 'Courses') {
             refFirst.current.classList.add('sideBarButtonClicked')
             refSecond.current.classList.remove('sideBarButtonClicked')
             refThird.current.classList.remove('sideBarButtonClicked')
@@ -18,7 +18,7 @@ function AdminPage() {
             if (mediaQuery.matches) {
                 target.style.display = 'none'
             }
-        } else if (event.currentTarget.innerText === 'Add Projects') {
+        } else if (event.currentTarget.innerText === 'Hero Section') {
             refSecond.current.classList.add('sideBarButtonClicked')
             refFirst.current.classList.remove('sideBarButtonClicked')
             refThird.current.classList.remove('sideBarButtonClicked')
@@ -26,7 +26,7 @@ function AdminPage() {
             if (mediaQuery.matches) {
                 target.style.display = 'none'
             }
-        } else if (event.currentTarget.innerText === 'Footer') {
+        } else if (event.currentTarget.innerText === 'Student Reviews') {
             refThird.current.classList.add('sideBarButtonClicked')
             refFirst.current.classList.remove('sideBarButtonClicked')
             refSecond.current.classList.remove('sideBarButtonClicked')
