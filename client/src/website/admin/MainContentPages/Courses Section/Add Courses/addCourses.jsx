@@ -27,7 +27,6 @@ function AddCourses() {
     const navigate = useNavigate();
     const fileInputRef = useRef(null);
 
-
     useEffect(() => {
         const fetchCourses = async () => {
             try {
@@ -125,27 +124,42 @@ function AddCourses() {
         }
     };
 
+    const removeContentFromModule = (moduleIndex, contentIndex) => {
+        const updatedModules = [...courseDetails.modules];
+        updatedModules[moduleIndex].content.splice(contentIndex, 1); // Remove the content at the specified index
+        setCourseDetails((prevDetails) => ({
+            ...prevDetails,
+            modules: updatedModules,
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         // Confirmation before submitting
         const confirmSubmit = window.confirm("Are you sure you want to add this course?");
         if (!confirmSubmit) {
             return; // Exit if the user cancels
         }
-
+    
+        // Validation for paid courses
+        if (courseType === 'paid' && (!courseDetails.modules.length || !courseDetails.modules.some(module => module.title && module.liveClasses && module.projects && module.assignments))) {
+            alert('Please fill out at least one module completely.');
+            return; // Exit if validation fails
+        }
+    
         setIsSubmitting(true); // Set loading state
-
+    
         const courseData = { ...courseDetails };
-
+    
         // If the course is free, remove modules from the data
         if (courseType === 'free') {
             delete courseData.modules;
-            delete courseData.gifImage
+            delete courseData.gifImage;
         } else {
-            delete courseData.playlist_id
+            delete courseData.playlist_id;
         }
-
+    
         // Prepare form data for image and GIF upload
         const formData = new FormData();
         Object.keys(courseData).forEach((key) => {
@@ -157,23 +171,23 @@ function AddCourses() {
                 formData.append(key, courseData[key]);
             }
         });
-
+    
         // Include gifImage in the form data
         if (gifImage) {
             formData.append('gifImage', gifImage);
         }
-
+    
         try {
             const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/courses/userCoursePost`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
+    
             if (response.status === 200 || response.status === 201) {
                 alert('Course added successfully!');
                 setCourses((prevCourses) => [...prevCourses, response.data.course]);
-
+    
                 // Reset form fields after successful submission
                 setCourseDetails({
                     title: '',
@@ -186,7 +200,6 @@ function AddCourses() {
                     modules: [],
                 });
                 document.querySelector('input[type=file]').value = '';
-                document.querySelector('input[type=file]').value = '';
                 setGifImage(null); // Reset GIF image
                 setSearchTerm('');
                 setCourseType('free'); // Reset course type to free
@@ -198,6 +211,7 @@ function AddCourses() {
             setIsSubmitting(false); // Reset loading state
         }
     };
+    
 
     const handleEdit = (course) => {
         navigate('/admin/edit', { state: { course } });
@@ -250,7 +264,7 @@ function AddCourses() {
     };
 
     useEffect(() => {
-        if (courseType == 'paid') {
+        if (courseType === 'paid') {
             // Reset the file input if courseType is not 'paid'
             fileInputRef.current.value = '';
         }
@@ -261,7 +275,7 @@ function AddCourses() {
     }
 
     return (
-        <div className="container mt-2">
+        <div className="container my-4">
             <h2 className="mb-4">Add Course</h2>
             <div className="mb-3">
                 <button className="btn btn-primary me-2" onClick={() => setCourseType('free')}>Free Course</button>
@@ -319,7 +333,16 @@ function AddCourses() {
                         <h3 className="mb-3">Modules</h3>
                         {courseDetails.modules.map((module, index) => (
                             <div key={index} className="mb-4 p-3 border rounded bg-light">
+                                <div className='d-flex justify-content-between align-items-center'>
                                 <h5>Module {index + 1}</h5>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger mt-2"
+                                    onClick={() => deleteModule(index)} // Call delete function on click
+                                >
+                                    <i className="fa-regular fa-trash-can"></i>
+                                </button>
+                                </div>
                                 <label className="form-label">Module Title:</label>
                                 <input
                                     type="text"
@@ -366,22 +389,27 @@ function AddCourses() {
                                     />
                                 </div>
                                 <div className="mt-2">
-                                    <strong>Current Content:</strong> {module.content.join(', ')}
+                                    <strong>Current Content:</strong>
+                                    {module.content.map((content, contentIndex) => (
+                                        <div key={contentIndex} className="d-flex justify-content-between align-items-center mb-2">
+                                            <span>{content}</span>
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger btn-sm ms-2"
+                                                onClick={() => removeContentFromModule(index, contentIndex)}
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    ))}
                                 </div>
                                 <button
                                     type="button"
-                                    className="btn btn-danger mt-2"
-                                    onClick={() => deleteModule(index)} // Call delete function on click
+                                    className="btn btn-secondary mt-2 mx-2"
+                                    onClick={() => addContentToModule(index)}
                                 >
-                                    <i className="fa-regular fa-trash-can"></i>
+                                    <i className="fa-solid fa-plus"></i>
                                 </button>
-                                <button
-                                        type="button"
-                                        className="btn btn-secondary mt-2 mx-2"
-                                        onClick={() => addContentToModule(index)}
-                                    >
-                                        <i className="fa-solid fa-plus"></i>
-                                    </button>
                             </div>
                         ))}
                         <button type="button" className="btn btn-dark" onClick={addModule}>Add Module</button>
@@ -405,7 +433,7 @@ function AddCourses() {
                 {filteredCourses.reverse().map((course, index) => (
                     <li key={index} className="list-group-item d-flex justify-content-between align-items-center row">
                         <div className='col-md-9 col-sm-8 col-7'>
-                        {course.title}
+                            {course.title}
                         </div>
                         <div className='col-md-3 col-sm-4 col-5'>
                             <button className="btn btn-info btn-sm me-2" onClick={() => handleEdit(course)}>Edit</button>

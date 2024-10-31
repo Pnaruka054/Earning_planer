@@ -40,7 +40,7 @@ function Allcontent() {
   let index = location.pathname
 
   useEffect(() => {
-    let indexToShowHF = location.pathname === '/admin' || location.pathname === `/admin/editFooter/${index}` ? false : location.pathname !== `/admin/edit/${index}`
+    let indexToShowHF = location.pathname === '/admin' || location.pathname === `/admin/edit` ? false : location.pathname !== `/admin/edit/${index}`
     setShowHF(indexToShowHF)
   }, [location, index])
 

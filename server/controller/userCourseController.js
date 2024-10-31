@@ -84,7 +84,7 @@ const userDeleteCourse = async (req, res) => {
         if (courseImage_url) {
             const courseImage_url_publicId = extractPublicId(courseImage_url);
             await cloudinary.uploader.destroy(courseImage_url_publicId);
-            if(courseGif_url){
+            if (courseGif_url) {
                 const courseGif_url_publicId = extractPublicId(courseGif_url);
                 await cloudinary.uploader.destroy(courseGif_url_publicId);
             }
@@ -168,11 +168,68 @@ const userCoursePost = async (req, res) => {
     }
 };
 
+const userCourseEditPatch = async (req, res) => {
+    const { courseId } = req.params; // Get course ID from URL parameters
+    const updateData = req.body; // Get update data from the request body
+
+    try {
+        let updatedCourse;
+
+        // Check if updateData contains modules
+        if (updateData.modules && updateData.modules.length > 0) {
+            // If modules exist, update in paidCourseModel
+            updatedCourse = await paidCourseModel.findByIdAndUpdate(courseId, updateData, {
+                new: true, // Return the updated document
+                runValidators: true // Ensure validation is run on the updated data
+            });
+        } else {
+            // If no modules, update in freeCourseModel
+            updatedCourse = await freeCourseModel.findByIdAndUpdate(courseId, updateData, {
+                new: true, // Return the updated document
+                runValidators: true // Ensure validation is run on the updated data
+            });
+        }
+
+        if (!updatedCourse) {
+            return res.status(404).json({ message: 'Course not found.' });
+        }
+
+        // Respond with the updated course data
+        res.status(200).json(updatedCourse);
+    } catch (error) {
+        console.error('Error updating course:', error);
+        res.status(500).json({ message: 'Error updating course.', error: error.message });
+    }
+};
+
+const userCourseImagesEditUploder = async (req, res) => {
+    try {
+        let { imageurl } = req.query
+
+        const extractPublicId = (url) => {
+            // Implement your logic here to extract the public ID from the URL
+            // Example: If URL is "https://res.cloudinary.com/your_cloud_name/image/upload/v1615467850/sample.jpg"
+            // You would extract "sample" or "sample/v1615467850"
+            const segments = url.split('/');
+            return segments[segments.length - 1].split('.')[0]; // This is a basic example
+        };
+
+        const courseImage_url_publicId = extractPublicId(imageurl);
+        await cloudinary.uploader.destroy(courseImage_url_publicId);
+        res.status(200).json({ success: true });
+    } catch (error) {
+        console.error('Error deleting image from Cloudinary:', error);
+        res.status(500).json({ message: 'Error deleting image.' });
+    }
+
+}
 
 module.exports = {
     userCourseSearch,
     userCoursesGet,
     userAllCoursesGet,
     userDeleteCourse,
-    userCoursePost
+    userCoursePost,
+    userCourseEditPatch,
+    userCourseImagesEditUploder
 }

@@ -3,7 +3,7 @@ const route = express.Router(); // Use Router for modular routes
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const multerStorageCloudinary = require('multer-storage-cloudinary').CloudinaryStorage;
-const { userCourseSearch, userCoursesGet, userAllCoursesGet, userDeleteCourse, userCoursePost } = require("../controller/userCourseController");
+const { userCourseSearch, userCoursesGet, userAllCoursesGet, userDeleteCourse, userCoursePost, userCourseEditPatch, userCourseImagesEditUploder } = require("../controller/userCourseController");
 
 route.get("/userCourseSearch", userCourseSearch);
 route.get("/userCoursesGet/:id", userCoursesGet);
@@ -21,6 +21,9 @@ const upload = multer({ storage: storage });
 
 // Route for posting a course with image and GIF uploads
 route.post("/userCoursePost", upload.fields([{ name: 'image' }, { name: 'gifImage' }]), userCoursePost);
+
+route.patch("/userCourseEditPatch/:courseId", userCourseEditPatch);
+route.patch("/userCourseImagesEditUploder", upload.fields([{ name: 'image' }, { name: 'gifImage' }]), userCourseImagesEditUploder);
 
 route.delete("/userDeleteCourse/:courseId", userDeleteCourse);
 
